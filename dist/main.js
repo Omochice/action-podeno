@@ -24029,7 +24029,7 @@ var main = async () => {
   (0, import_core2.info)("Start main process");
   const message = (0, import_core2.getInput)("config", { required: true });
   try {
-    const json = JSON.stringify(import_shim_deno2.Deno.readTextFileSync(message));
+    const json = JSON.parse(import_shim_deno2.Deno.readTextFileSync(message));
     (0, import_core2.info)(json);
   } catch (e) {
     (0, import_core2.info)(e);
