@@ -9,15 +9,16 @@ branding:
 
 # Define your inputs here.
 inputs:
-  message:
-    description: 'Your input description here'
+  config:
+    description: "Path to your podeno.config.json"
     required: true
-    default: 'test message'
+    default: "podeno.config.json"
 
 # Define your outputs here.
 outputs:
   message:
     description: 'Your output description here'
+
 runs:
   using: node20
   main: dist/main.js

@@ -3,10 +3,15 @@ import { writeSummary } from "./github.ts";
 
 const main = async () => {
   info("Start main process");
-  const message = getInput("message", { required: true });
+  const message = getInput("config", { required: true });
 
-  debug(message);
-  await writeSummary("main", message);
+  try {
+    const json = JSON.stringify(Deno.readTextFileSync(message));
+    info(json);
+  } catch (e) {
+    info(e);
+  }
+  await writeSummary("main", "hi?");
 
   info("Complete main process");
 };
