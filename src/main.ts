@@ -6,7 +6,7 @@ const main = async () => {
   const message = getInput("config", { required: true });
 
   try {
-    const json = JSON.stringify(Deno.readTextFileSync(message));
+    const json = JSON.parse(Deno.readTextFileSync(message));
     info(json);
   } catch (e) {
     info(e);
