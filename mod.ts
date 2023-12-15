@@ -1,3 +1,7 @@
-console.log("hi this is from docker")
+import { summary } from "npm:@actions/core@1.10.1";
 
-console.log(`[${Deno.args.join(", ")}]`)
+console.log("hi this is from docker");
+
+console.log(`[${Deno.args.join(", ")}]`);
+
+summary.addRaw("## header\n\nthis is message.").write();
