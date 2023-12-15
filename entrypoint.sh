@@ -1,4 +1,3 @@
 #!/bin/sh -l
 
-ls
-deno run -A /mod.ts
+deno run -A /mod.ts $1
