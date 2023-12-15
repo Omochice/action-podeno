@@ -15,6 +15,7 @@ const main = async () => {
     .orElse((err: Error) => {
       info(err.message);
       debug(err.stack ?? "");
+      debug(`${err.cause}` ?? "");
       return ok(undefined)
     });
   await writeSummary("main", "hi?");
