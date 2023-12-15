@@ -17212,7 +17212,7 @@ var require_response = __commonJS({
     var { types } = require("util");
     var ReadableStream = globalThis.ReadableStream || require("stream/web").ReadableStream;
     var textEncoder = new TextEncoder("utf-8");
-    var Response = class _Response {
+    var Response2 = class _Response {
       // Creates network error Response.
       static error() {
         const relevantRealm = { settingsObject: {} };
@@ -17354,8 +17354,8 @@ var require_response = __commonJS({
         return clonedResponseObject;
       }
     };
-    mixinBody(Response);
-    Object.defineProperties(Response.prototype, {
+    mixinBody(Response2);
+    Object.defineProperties(Response2.prototype, {
       type: kEnumerableProperty,
       url: kEnumerableProperty,
       status: kEnumerableProperty,
@@ -17371,7 +17371,7 @@ var require_response = __commonJS({
         configurable: true
       }
     });
-    Object.defineProperties(Response, {
+    Object.defineProperties(Response2, {
       json: kEnumerableProperty,
       redirect: kEnumerableProperty,
       error: kEnumerableProperty
@@ -17553,7 +17553,7 @@ var require_response = __commonJS({
       makeResponse,
       makeAppropriateNetworkError,
       filterResponse,
-      Response,
+      Response: Response2,
       cloneResponse
     };
   }
@@ -18203,7 +18203,7 @@ var require_fetch = __commonJS({
   "npm/node_modules/undici/lib/fetch/index.js"(exports, module2) {
     "use strict";
     var {
-      Response,
+      Response: Response2,
       makeNetworkError,
       makeAppropriateNetworkError,
       filterResponse,
@@ -18343,7 +18343,7 @@ var require_fetch = __commonJS({
           );
           return Promise.resolve();
         }
-        responseObject = new Response();
+        responseObject = new Response2();
         responseObject[kState] = response;
         responseObject[kRealm] = relevantRealm;
         responseObject[kHeaders][kHeadersList] = response.headersList;
@@ -20099,7 +20099,7 @@ var require_cache = __commonJS({
     var { kEnumerableProperty, isDisturbed } = require_util();
     var { kHeadersList } = require_symbols();
     var { webidl } = require_webidl();
-    var { Response, cloneResponse } = require_response();
+    var { Response: Response2, cloneResponse } = require_response();
     var { Request } = require_request2();
     var { kState, kHeaders, kGuard, kRealm } = require_symbols2();
     var { fetching } = require_fetch();
@@ -20158,7 +20158,7 @@ var require_cache = __commonJS({
         }
         const responseList = [];
         for (const response of responses) {
-          const responseObject = new Response(response.body?.source ?? null);
+          const responseObject = new Response2(response.body?.source ?? null);
           const body = responseObject[kState].body;
           responseObject[kState] = response;
           responseObject[kState].body = body;
@@ -20614,7 +20614,7 @@ var require_cache = __commonJS({
         converter: webidl.converters.DOMString
       }
     ]);
-    webidl.converters.Response = webidl.interfaceConverter(Response);
+    webidl.converters.Response = webidl.interfaceConverter(Response2);
     webidl.converters["sequence<RequestInfo>"] = webidl.sequenceConverter(
       webidl.converters.RequestInfo
     );
@@ -28906,7 +28906,7 @@ var require_core2 = __commonJS({
       });
       return obj;
     }
-    var Response = class {
+    var Response2 = class {
       /**
        * @param {CompiledMode} mode
        */
@@ -29994,7 +29994,7 @@ var require_core2 = __commonJS({
           let matched = startsWith(mode.endRe, matchPlusRemainder);
           if (matched) {
             if (mode["on:end"]) {
-              const resp = new Response(mode);
+              const resp = new Response2(mode);
               mode["on:end"](match, resp);
               if (resp.isMatchIgnored)
                 matched = false;
@@ -30022,7 +30022,7 @@ var require_core2 = __commonJS({
         function doBeginMatch(match) {
           const lexeme = match[0];
           const newMode = match.rule;
-          const resp = new Response(newMode);
+          const resp = new Response2(newMode);
           const beforeCallbacks = [newMode.__beforeBegin, newMode["on:begin"]];
           for (const cb of beforeCallbacks) {
             if (!cb)
@@ -78755,8 +78755,418 @@ var require_lib2 = __commonJS({
   }
 });
 
-// npm/node_modules/vscode-textmate/release/main.js
+// npm/node_modules/vscode-oniguruma/release/main.js
 var require_main4 = __commonJS({
+  "npm/node_modules/vscode-oniguruma/release/main.js"(exports, module2) {
+    !function(t, n) {
+      "object" == typeof exports && "object" == typeof module2 ? module2.exports = n() : "function" == typeof define && define.amd ? define([], n) : "object" == typeof exports ? exports.onig = n() : t.onig = n();
+    }(exports, () => {
+      return t = { 770: function(t2, n2, e) {
+        "use strict";
+        var r = this && this.__importDefault || function(t3) {
+          return t3 && t3.__esModule ? t3 : { default: t3 };
+        };
+        Object.defineProperty(n2, "__esModule", { value: true }), n2.setDefaultDebugCall = n2.createOnigScanner = n2.createOnigString = n2.loadWASM = n2.OnigScanner = n2.OnigString = void 0;
+        const i = r(e(418));
+        let o = null, a = false;
+        class f {
+          static _utf8ByteLength(t3) {
+            let n3 = 0;
+            for (let e2 = 0, r2 = t3.length; e2 < r2; e2++) {
+              const i2 = t3.charCodeAt(e2);
+              let o2 = i2, a2 = false;
+              if (i2 >= 55296 && i2 <= 56319 && e2 + 1 < r2) {
+                const n4 = t3.charCodeAt(e2 + 1);
+                n4 >= 56320 && n4 <= 57343 && (o2 = 65536 + (i2 - 55296 << 10) | n4 - 56320, a2 = true);
+              }
+              n3 += o2 <= 127 ? 1 : o2 <= 2047 ? 2 : o2 <= 65535 ? 3 : 4, a2 && e2++;
+            }
+            return n3;
+          }
+          constructor(t3) {
+            const n3 = t3.length, e2 = f._utf8ByteLength(t3), r2 = e2 !== n3, i2 = r2 ? new Uint32Array(n3 + 1) : null;
+            r2 && (i2[n3] = e2);
+            const o2 = r2 ? new Uint32Array(e2 + 1) : null;
+            r2 && (o2[e2] = n3);
+            const a2 = new Uint8Array(e2);
+            let s2 = 0;
+            for (let e3 = 0; e3 < n3; e3++) {
+              const f2 = t3.charCodeAt(e3);
+              let u2 = f2, c2 = false;
+              if (f2 >= 55296 && f2 <= 56319 && e3 + 1 < n3) {
+                const n4 = t3.charCodeAt(e3 + 1);
+                n4 >= 56320 && n4 <= 57343 && (u2 = 65536 + (f2 - 55296 << 10) | n4 - 56320, c2 = true);
+              }
+              r2 && (i2[e3] = s2, c2 && (i2[e3 + 1] = s2), u2 <= 127 ? o2[s2 + 0] = e3 : u2 <= 2047 ? (o2[s2 + 0] = e3, o2[s2 + 1] = e3) : u2 <= 65535 ? (o2[s2 + 0] = e3, o2[s2 + 1] = e3, o2[s2 + 2] = e3) : (o2[s2 + 0] = e3, o2[s2 + 1] = e3, o2[s2 + 2] = e3, o2[s2 + 3] = e3)), u2 <= 127 ? a2[s2++] = u2 : u2 <= 2047 ? (a2[s2++] = 192 | (1984 & u2) >>> 6, a2[s2++] = 128 | (63 & u2) >>> 0) : u2 <= 65535 ? (a2[s2++] = 224 | (61440 & u2) >>> 12, a2[s2++] = 128 | (4032 & u2) >>> 6, a2[s2++] = 128 | (63 & u2) >>> 0) : (a2[s2++] = 240 | (1835008 & u2) >>> 18, a2[s2++] = 128 | (258048 & u2) >>> 12, a2[s2++] = 128 | (4032 & u2) >>> 6, a2[s2++] = 128 | (63 & u2) >>> 0), c2 && e3++;
+            }
+            this.utf16Length = n3, this.utf8Length = e2, this.utf16Value = t3, this.utf8Value = a2, this.utf16OffsetToUtf8 = i2, this.utf8OffsetToUtf16 = o2;
+          }
+          createString(t3) {
+            const n3 = t3._omalloc(this.utf8Length);
+            return t3.HEAPU8.set(this.utf8Value, n3), n3;
+          }
+        }
+        class s {
+          constructor(t3) {
+            if (this.id = ++s.LAST_ID, !o)
+              throw new Error("Must invoke loadWASM first.");
+            this._onigBinding = o, this.content = t3;
+            const n3 = new f(t3);
+            this.utf16Length = n3.utf16Length, this.utf8Length = n3.utf8Length, this.utf16OffsetToUtf8 = n3.utf16OffsetToUtf8, this.utf8OffsetToUtf16 = n3.utf8OffsetToUtf16, this.utf8Length < 1e4 && !s._sharedPtrInUse ? (s._sharedPtr || (s._sharedPtr = o._omalloc(1e4)), s._sharedPtrInUse = true, o.HEAPU8.set(n3.utf8Value, s._sharedPtr), this.ptr = s._sharedPtr) : this.ptr = n3.createString(o);
+          }
+          convertUtf8OffsetToUtf16(t3) {
+            return this.utf8OffsetToUtf16 ? t3 < 0 ? 0 : t3 > this.utf8Length ? this.utf16Length : this.utf8OffsetToUtf16[t3] : t3;
+          }
+          convertUtf16OffsetToUtf8(t3) {
+            return this.utf16OffsetToUtf8 ? t3 < 0 ? 0 : t3 > this.utf16Length ? this.utf8Length : this.utf16OffsetToUtf8[t3] : t3;
+          }
+          dispose() {
+            this.ptr === s._sharedPtr ? s._sharedPtrInUse = false : this._onigBinding._ofree(this.ptr);
+          }
+        }
+        n2.OnigString = s, s.LAST_ID = 0, s._sharedPtr = 0, s._sharedPtrInUse = false;
+        class u {
+          constructor(t3) {
+            if (!o)
+              throw new Error("Must invoke loadWASM first.");
+            const n3 = [], e2 = [];
+            for (let r3 = 0, i3 = t3.length; r3 < i3; r3++) {
+              const i4 = new f(t3[r3]);
+              n3[r3] = i4.createString(o), e2[r3] = i4.utf8Length;
+            }
+            const r2 = o._omalloc(4 * t3.length);
+            o.HEAPU32.set(n3, r2 / 4);
+            const i2 = o._omalloc(4 * t3.length);
+            o.HEAPU32.set(e2, i2 / 4);
+            const a2 = o._createOnigScanner(r2, i2, t3.length);
+            for (let e3 = 0, r3 = t3.length; e3 < r3; e3++)
+              o._ofree(n3[e3]);
+            o._ofree(i2), o._ofree(r2), 0 === a2 && function(t4) {
+              throw new Error(t4.UTF8ToString(t4._getLastOnigError()));
+            }(o), this._onigBinding = o, this._ptr = a2;
+          }
+          dispose() {
+            this._onigBinding._freeOnigScanner(this._ptr);
+          }
+          findNextMatchSync(t3, n3, e2) {
+            let r2 = a, i2 = 0;
+            if ("number" == typeof e2 ? (8 & e2 && (r2 = true), i2 = e2) : "boolean" == typeof e2 && (r2 = e2), "string" == typeof t3) {
+              t3 = new s(t3);
+              const e3 = this._findNextMatchSync(t3, n3, r2, i2);
+              return t3.dispose(), e3;
+            }
+            return this._findNextMatchSync(t3, n3, r2, i2);
+          }
+          _findNextMatchSync(t3, n3, e2, r2) {
+            const i2 = this._onigBinding;
+            let o2;
+            if (o2 = e2 ? i2._findNextOnigScannerMatchDbg(this._ptr, t3.id, t3.ptr, t3.utf8Length, t3.convertUtf16OffsetToUtf8(n3), r2) : i2._findNextOnigScannerMatch(this._ptr, t3.id, t3.ptr, t3.utf8Length, t3.convertUtf16OffsetToUtf8(n3), r2), 0 === o2)
+              return null;
+            const a2 = i2.HEAPU32;
+            let f2 = o2 / 4;
+            const s2 = a2[f2++], u2 = a2[f2++];
+            let c2 = [];
+            for (let n4 = 0; n4 < u2; n4++) {
+              const e3 = t3.convertUtf8OffsetToUtf16(a2[f2++]), r3 = t3.convertUtf8OffsetToUtf16(a2[f2++]);
+              c2[n4] = { start: e3, end: r3, length: r3 - e3 };
+            }
+            return { index: s2, captureIndices: c2 };
+          }
+        }
+        n2.OnigScanner = u;
+        let c = false, l = null;
+        n2.loadWASM = function(t3) {
+          if (c)
+            return l;
+          let n3, e2, r2, a2;
+          if (c = true, function(t4) {
+            return "function" == typeof t4.instantiator;
+          }(t3))
+            n3 = t3.instantiator, e2 = t3.print;
+          else {
+            let r3;
+            !function(t4) {
+              return void 0 !== t4.data;
+            }(t3) ? r3 = t3 : (r3 = t3.data, e2 = t3.print), n3 = function(t4) {
+              return "undefined" != typeof Response && t4 instanceof Response;
+            }(r3) ? "function" == typeof WebAssembly.instantiateStreaming ? function(t4) {
+              return (n4) => WebAssembly.instantiateStreaming(t4, n4);
+            }(r3) : function(t4) {
+              return async (n4) => {
+                const e3 = await t4.arrayBuffer();
+                return WebAssembly.instantiate(e3, n4);
+              };
+            }(r3) : function(t4) {
+              return (n4) => WebAssembly.instantiate(t4, n4);
+            }(r3);
+          }
+          return l = new Promise((t4, n4) => {
+            r2 = t4, a2 = n4;
+          }), function(t4, n4, e3, r3) {
+            (0, i.default)({ print: n4, instantiateWasm: (n5, e4) => {
+              if ("undefined" == typeof performance) {
+                const t5 = () => Date.now();
+                n5.env.emscripten_get_now = t5, n5.wasi_snapshot_preview1.emscripten_get_now = t5;
+              }
+              return t4(n5).then((t5) => e4(t5.instance), r3), {};
+            } }).then((t5) => {
+              o = t5, e3();
+            });
+          }(n3, e2, r2, a2), l;
+        }, n2.createOnigString = function(t3) {
+          return new s(t3);
+        }, n2.createOnigScanner = function(t3) {
+          return new u(t3);
+        }, n2.setDefaultDebugCall = function(t3) {
+          a = t3;
+        };
+      }, 418: (t2) => {
+        var n2 = ("undefined" != typeof document && document.currentScript && document.currentScript.src, function(t3) {
+          var n3, e, r = void 0 !== (t3 = t3 || {}) ? t3 : {};
+          r.ready = new Promise(function(t4, r2) {
+            n3 = t4, e = r2;
+          });
+          var i, o = Object.assign({}, r), a = [], f = false, s = false, u = true, c = "";
+          function l(t4) {
+            return r.locateFile ? r.locateFile(t4, c) : c + t4;
+          }
+          u && (i = function(t4) {
+            let n4;
+            return "function" == typeof readbuffer ? new Uint8Array(readbuffer(t4)) : (n4 = read(t4, "binary"), m("object" == typeof n4), n4);
+          }, "undefined" != typeof scriptArgs ? a = scriptArgs : void 0 !== arguments && (a = arguments), "undefined" != typeof onig_print && ("undefined" == typeof console && (console = {}), console.log = onig_print, console.warn = console.error = "undefined" != typeof printErr ? printErr : onig_print));
+          var h, p, d = r.print || console.log.bind(console), g = r.printErr || console.warn.bind(console);
+          Object.assign(r, o), o = null, r.arguments && (a = r.arguments), r.thisProgram && r.thisProgram, r.quit && r.quit, r.wasmBinary && (h = r.wasmBinary), r.noExitRuntime, "object" != typeof WebAssembly && k("no native wasm support detected");
+          var _ = false;
+          function m(t4, n4) {
+            t4 || k(n4);
+          }
+          var y, w, S, v = "undefined" != typeof TextDecoder ? new TextDecoder("utf8") : void 0;
+          function A(t4, n4, e2) {
+            for (var r2 = n4 + e2, i2 = n4; t4[i2] && !(i2 >= r2); )
+              ++i2;
+            if (i2 - n4 > 16 && t4.buffer && v)
+              return v.decode(t4.subarray(n4, i2));
+            for (var o2 = ""; n4 < i2; ) {
+              var a2 = t4[n4++];
+              if (128 & a2) {
+                var f2 = 63 & t4[n4++];
+                if (192 != (224 & a2)) {
+                  var s2 = 63 & t4[n4++];
+                  if ((a2 = 224 == (240 & a2) ? (15 & a2) << 12 | f2 << 6 | s2 : (7 & a2) << 18 | f2 << 12 | s2 << 6 | 63 & t4[n4++]) < 65536)
+                    o2 += String.fromCharCode(a2);
+                  else {
+                    var u2 = a2 - 65536;
+                    o2 += String.fromCharCode(55296 | u2 >> 10, 56320 | 1023 & u2);
+                  }
+                } else
+                  o2 += String.fromCharCode((31 & a2) << 6 | f2);
+              } else
+                o2 += String.fromCharCode(a2);
+            }
+            return o2;
+          }
+          function b(t4, n4) {
+            return t4 ? A(w, t4, n4) : "";
+          }
+          function O(t4) {
+            y = t4, r.HEAP8 = new Int8Array(t4), r.HEAP16 = new Int16Array(t4), r.HEAP32 = new Int32Array(t4), r.HEAPU8 = w = new Uint8Array(t4), r.HEAPU16 = new Uint16Array(t4), r.HEAPU32 = S = new Uint32Array(t4), r.HEAPF32 = new Float32Array(t4), r.HEAPF64 = new Float64Array(t4);
+          }
+          r.INITIAL_MEMORY;
+          var U = [], P = [], R = [];
+          function x() {
+            if (r.preRun)
+              for ("function" == typeof r.preRun && (r.preRun = [r.preRun]); r.preRun.length; )
+                M(r.preRun.shift());
+            G(U);
+          }
+          function T() {
+            G(P);
+          }
+          function E() {
+            if (r.postRun)
+              for ("function" == typeof r.postRun && (r.postRun = [r.postRun]); r.postRun.length; )
+                I(r.postRun.shift());
+            G(R);
+          }
+          function M(t4) {
+            U.unshift(t4);
+          }
+          function L(t4) {
+            P.unshift(t4);
+          }
+          function I(t4) {
+            R.unshift(t4);
+          }
+          var W = 0, D = null, C = null;
+          function N(t4) {
+            W++, r.monitorRunDependencies && r.monitorRunDependencies(W);
+          }
+          function j(t4) {
+            if (W--, r.monitorRunDependencies && r.monitorRunDependencies(W), 0 == W && (null !== D && (clearInterval(D), D = null), C)) {
+              var n4 = C;
+              C = null, n4();
+            }
+          }
+          function k(t4) {
+            r.onAbort && r.onAbort(t4), g(t4 = "Aborted(" + t4 + ")"), _ = true, t4 += ". Build with -sASSERTIONS for more info.";
+            var n4 = new WebAssembly.RuntimeError(t4);
+            throw e(n4), n4;
+          }
+          var B, H, F = "data:application/octet-stream;base64,";
+          function V(t4) {
+            return t4.startsWith(F);
+          }
+          function z(t4) {
+            try {
+              if (t4 == B && h)
+                return new Uint8Array(h);
+              if (i)
+                return i(t4);
+              throw "both async and sync fetching of the wasm failed";
+            } catch (t5) {
+              k(t5);
+            }
+          }
+          function q() {
+            return h || !f && !s || "function" != typeof fetch ? Promise.resolve().then(function() {
+              return z(B);
+            }) : fetch(B, { credentials: "same-origin" }).then(function(t4) {
+              if (!t4.ok)
+                throw "failed to load wasm binary file at '" + B + "'";
+              return t4.arrayBuffer();
+            }).catch(function() {
+              return z(B);
+            });
+          }
+          function Y() {
+            var t4 = { env: nt, wasi_snapshot_preview1: nt };
+            function n4(t5, n5) {
+              var e2 = t5.exports;
+              r.asm = e2, O((p = r.asm.memory).buffer), r.asm.__indirect_function_table, L(r.asm.__wasm_call_ctors), j();
+            }
+            function i2(t5) {
+              n4(t5.instance);
+            }
+            function o2(n5) {
+              return q().then(function(n6) {
+                return WebAssembly.instantiate(n6, t4);
+              }).then(function(t5) {
+                return t5;
+              }).then(n5, function(t5) {
+                g("failed to asynchronously prepare wasm: " + t5), k(t5);
+              });
+            }
+            if (N(), r.instantiateWasm)
+              try {
+                return r.instantiateWasm(t4, n4);
+              } catch (t5) {
+                g("Module.instantiateWasm callback failed with error: " + t5), e(t5);
+              }
+            return (h || "function" != typeof WebAssembly.instantiateStreaming || V(B) || "function" != typeof fetch ? o2(i2) : fetch(B, { credentials: "same-origin" }).then(function(n5) {
+              return WebAssembly.instantiateStreaming(n5, t4).then(i2, function(t5) {
+                return g("wasm streaming compile failed: " + t5), g("falling back to ArrayBuffer instantiation"), o2(i2);
+              });
+            })).catch(e), {};
+          }
+          function G(t4) {
+            for (; t4.length > 0; )
+              t4.shift()(r);
+          }
+          function J(t4, n4, e2) {
+            w.copyWithin(t4, n4, n4 + e2);
+          }
+          function K(t4) {
+            try {
+              return p.grow(t4 - y.byteLength + 65535 >>> 16), O(p.buffer), 1;
+            } catch (t5) {
+            }
+          }
+          function Q(t4) {
+            var n4, e2 = w.length, r2 = 2147483648;
+            if ((t4 >>>= 0) > r2)
+              return false;
+            for (var i2 = 1; i2 <= 4; i2 *= 2) {
+              var o2 = e2 * (1 + 0.2 / i2);
+              if (o2 = Math.min(o2, t4 + 100663296), K(Math.min(r2, (n4 = Math.max(t4, o2)) + (65536 - n4 % 65536) % 65536)))
+                return true;
+            }
+            return false;
+          }
+          V(B = "onig.wasm") || (B = l(B)), H = "undefined" != typeof dateNow ? dateNow : () => performance.now();
+          var X = [null, [], []];
+          function Z(t4, n4) {
+            var e2 = X[t4];
+            0 === n4 || 10 === n4 ? ((1 === t4 ? d : g)(A(e2, 0)), e2.length = 0) : e2.push(n4);
+          }
+          function $(t4, n4, e2, r2) {
+            for (var i2 = 0, o2 = 0; o2 < e2; o2++) {
+              var a2 = S[n4 >> 2], f2 = S[n4 + 4 >> 2];
+              n4 += 8;
+              for (var s2 = 0; s2 < f2; s2++)
+                Z(t4, w[a2 + s2]);
+              i2 += f2;
+            }
+            return S[r2 >> 2] = i2, 0;
+          }
+          var tt, nt = { emscripten_get_now: H, emscripten_memcpy_big: J, emscripten_resize_heap: Q, fd_write: $ };
+          function et(t4) {
+            function e2() {
+              tt || (tt = true, r.calledRun = true, _ || (T(), n3(r), r.onRuntimeInitialized && r.onRuntimeInitialized(), E()));
+            }
+            t4 = t4 || a, W > 0 || (x(), W > 0 || (r.setStatus ? (r.setStatus("Running..."), setTimeout(function() {
+              setTimeout(function() {
+                r.setStatus("");
+              }, 1), e2();
+            }, 1)) : e2()));
+          }
+          if (Y(), r.___wasm_call_ctors = function() {
+            return (r.___wasm_call_ctors = r.asm.__wasm_call_ctors).apply(null, arguments);
+          }, r.___errno_location = function() {
+            return (r.___errno_location = r.asm.__errno_location).apply(null, arguments);
+          }, r._omalloc = function() {
+            return (r._omalloc = r.asm.omalloc).apply(null, arguments);
+          }, r._ofree = function() {
+            return (r._ofree = r.asm.ofree).apply(null, arguments);
+          }, r._getLastOnigError = function() {
+            return (r._getLastOnigError = r.asm.getLastOnigError).apply(null, arguments);
+          }, r._createOnigScanner = function() {
+            return (r._createOnigScanner = r.asm.createOnigScanner).apply(null, arguments);
+          }, r._freeOnigScanner = function() {
+            return (r._freeOnigScanner = r.asm.freeOnigScanner).apply(null, arguments);
+          }, r._findNextOnigScannerMatch = function() {
+            return (r._findNextOnigScannerMatch = r.asm.findNextOnigScannerMatch).apply(null, arguments);
+          }, r._findNextOnigScannerMatchDbg = function() {
+            return (r._findNextOnigScannerMatchDbg = r.asm.findNextOnigScannerMatchDbg).apply(null, arguments);
+          }, r.stackSave = function() {
+            return (r.stackSave = r.asm.stackSave).apply(null, arguments);
+          }, r.stackRestore = function() {
+            return (r.stackRestore = r.asm.stackRestore).apply(null, arguments);
+          }, r.stackAlloc = function() {
+            return (r.stackAlloc = r.asm.stackAlloc).apply(null, arguments);
+          }, r.dynCall_jiji = function() {
+            return (r.dynCall_jiji = r.asm.dynCall_jiji).apply(null, arguments);
+          }, r.UTF8ToString = b, C = function t4() {
+            tt || et(), tt || (C = t4);
+          }, r.preInit)
+            for ("function" == typeof r.preInit && (r.preInit = [r.preInit]); r.preInit.length > 0; )
+              r.preInit.pop()();
+          return et(), t3.ready;
+        });
+        t2.exports = n2;
+      } }, n = {}, function e(r) {
+        var i = n[r];
+        if (void 0 !== i)
+          return i.exports;
+        var o = n[r] = { exports: {} };
+        return t[r].call(o.exports, o, o.exports, e), o.exports;
+      }(770);
+      var t, n;
+    });
+  }
+});
+
+// npm/node_modules/vscode-textmate/release/main.js
+var require_main5 = __commonJS({
   "npm/node_modules/vscode-textmate/release/main.js"(exports, module2) {
     !function(e, t) {
       "object" == typeof exports && "object" == typeof module2 ? module2.exports = t() : "function" == typeof define && define.amd ? define([], t) : "object" == typeof exports ? exports.vscodetextmate = t() : e.vscodetextmate = t();
@@ -80841,8 +81251,8 @@ var require_main4 = __commonJS({
 var require_dist4 = __commonJS({
   "npm/node_modules/shiki/dist/index.js"(exports) {
     "use strict";
-    var vscodeOniguruma = require("vscode-oniguruma");
-    var vscodeTextmate = require_main4();
+    var vscodeOniguruma = require_main4();
+    var vscodeTextmate = require_main5();
     var themes = [
       "css-variables",
       "dark-plus",
