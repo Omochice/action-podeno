@@ -37,7 +37,7 @@ await esbuild.build({
   format: "cjs",
   minify: false,
   sourcemap: false,
-  external: ["vscode-oniguruma"],
+  // external: ["vscode-oniguruma"],
 }).finally(() => {
   esbuild.stop();
 });
