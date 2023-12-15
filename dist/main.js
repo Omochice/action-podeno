@@ -86849,6 +86849,7 @@ var main = async () => {
   }
   for (const c of configs.value) {
     try {
+      (0, import_core2.debug)(JSON.stringify(Array.from(import_shim_deno2.Deno.readDirSync("."))));
       const converted = await execPodium(
         import_shim_deno2.Deno.readTextFileSync(c.in),
         c.type
