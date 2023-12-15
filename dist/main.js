@@ -24950,6 +24950,7 @@ var main = async () => {
   }).orElse((err2) => {
     (0, import_core2.info)(err2.message);
     (0, import_core2.debug)(err2.stack ?? "");
+    (0, import_core2.debug)(`${err2.cause}` ?? "");
     return (0, import_neverthrow2.ok)(void 0);
   });
   await writeSummary("main", "hi?");
