@@ -18,6 +18,7 @@ const main = async () => {
 
   for (const c of configs.value) {
     try {
+      debug(JSON.stringify(Array.from(Deno.readDirSync("."))))
       const converted = await execPodium(
         Deno.readTextFileSync(c.in),
         c.type,
