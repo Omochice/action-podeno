@@ -9,8 +9,8 @@ jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: Omochice/actions-podeno@v0
+      - uses: actions/checkout@v4
+      - uses: Omochice/actions-podeno@v0.1.0
         with:
           # config: { type: "markdown" | "vimdoc", in: string, out: string, autoMkdir?: boolean }[]
           #   type: Convert target type.
