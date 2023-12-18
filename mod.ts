@@ -4,7 +4,7 @@ console.log("hi this is from docker");
 
 console.log(`[${Deno.args.join(", ")}]`);
 
-console.log(JSON.parse(Deno.args[0]))
+console.log(JSON.parse(Deno.args.join(" ")))
 
 // summary.addRaw("## header\n\nthis is message.").write();
 
