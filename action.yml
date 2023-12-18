@@ -1,6 +1,6 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
+name: "Podeno"
+description: "Use podeno your github action"
+author: "Omochice"
 
 # Metadata for market place
 branding:
@@ -9,16 +9,13 @@ branding:
 
 # Define your inputs here.
 inputs:
-  message:
-    description: 'Your input description here'
+  config:
+    description: "Configure to podeno, accept json5 string."
     required: true
-    default: 'test message'
+    default: "[]"
 
-# Define your outputs here.
-outputs:
-  message:
-    description: 'Your output description here'
 runs:
-  using: node20
-  main: dist/main.js
-  post: dist/post.js
+  using: "docker"
+  image: "Dockerfile"
+  args:
+    - "${{ inputs.config }}"
