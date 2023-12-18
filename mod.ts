@@ -1,7 +1,10 @@
-// import { summary } from "npm:@actions/core@1.10.1";
 import JSON5 from "npm:json5@2.2.3";
 import { err, ok, Result, ResultAsync } from "npm:neverthrow@6.1.0";
-import { ensure, is } from "https://deno.land/x/unknownutil@v3.11.0/mod.ts";
+import { dirname } from "https://deno.land/std@0.209.0/path/dirname.ts";
+import {
+  is,
+  type PredicateType,
+} from "https://deno.land/x/unknownutil@v3.11.0/mod.ts";
 import { execPodium } from "https://pax.deno.dev/Omochice/podeno@v1.0.0-1/src/lua.ts";
 
 const toError = (message = "Unexpected error") => {
@@ -11,14 +14,35 @@ const toError = (message = "Unexpected error") => {
   };
 };
 
-const safeEnsure = Result.fromThrowable(ensure, toError());
-const isConfig = is.ArrayOf(
-  is.ObjectOf({
-    type: is.OneOf([is.LiteralOf("markdown"), is.LiteralOf("vimdoc")]),
-    in: is.String,
-    out: is.String,
-  }),
+const isConfig = is.ObjectOf({
+  type: is.OneOf([is.LiteralOf("markdown"), is.LiteralOf("vimdoc")]),
+  in: is.String,
+  out: is.String,
+  autoMkdir: is.OptionalOf(is.Boolean),
+});
+
+const isConfigArray = is.ArrayOf(
+  isConfig,
 );
+
+const safeReadTextFileSync = Result.fromThrowable(
+  Deno.readTextFileSync,
+  toError(),
+);
+
+const convert = (config: PredicateType<typeof isConfig>) => {
+  return safeReadTextFileSync(config.in)
+    .asyncAndThen((content) => {
+      return execPodium(content, config.type);
+    })
+    .andThen((content) => {
+      return ok({
+        content,
+        out: config.out,
+        autoMkdir: config.autoMkdir ?? false,
+      });
+    });
+};
 
 const main = async (args: string[]) => {
   const safeParse = Result.fromThrowable(
@@ -30,44 +54,27 @@ const main = async (args: string[]) => {
     throw new Error("Config must be specified.");
   }
 
-  const configArray = safeParse(configString)
+  await safeParse(configString)
     .andThen((configs: unknown) => {
-      if (!isConfig(configs)) {
+      if (!isConfigArray(configs)) {
         return err(new Error("config invalid shape"));
       }
       return ok(configs);
-    });
-  if (configArray.isErr()) {
-    throw configArray.error;
-  }
-
-  configArray.value.forEach(async (config) => {
-    await execPodium(
-      Deno.readTextFileSync(config.in),
-      config.type,
-    ).match(
-      (s) => console.log(s),
+    })
+    .asyncAndThen((configs) => ResultAsync.combine(configs.map(convert)))
+    .match(
+      (s) => {
+        s.forEach((ss) => {
+          if (ss.autoMkdir) {
+            Deno.mkdirSync(dirname(ss.out), { recursive: true });
+          }
+          Deno.writeTextFileSync(ss.out, ss.content);
+        });
+      },
       (e) => {
         throw e;
       },
     );
-  });
-  // .andThen((configs) => {
-  //   ResultAsync.combine(configs.map((config) => {
-  //     execPodium(
-  //       Deno.readTextFileSync(config.in),
-  //       config.type,
-  //     );
-  //   }));
-  // });
 };
 
 await main(Deno.args);
-
-// console.log("hi this is from docker");
-
-// console.log(JSON5.parse(Deno.args[0]));
-
-// // summary.addRaw("## header\n\nthis is message.").write();
-
-// Deno.writeTextFileSync("sample.txt", "this is sample.text");
