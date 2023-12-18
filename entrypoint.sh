@@ -1,3 +1,3 @@
 #!/bin/sh -l
 
-deno run -A /mod.ts $1
+deno run -A /mod.ts "$@"
