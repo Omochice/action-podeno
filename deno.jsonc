@@ -1,15 +1,8 @@
 {
   "tasks": {
-    "setup:githooks": "git config --local core.hooksPath .githooks",
-    "dev": "deno test --watch -A",
-    "bundle": "deno run -A scripts/build.ts",
-    "bundle:commit": "deno task bundle && git add -u dist && git commit -m 'build: deno task bundle'"
-  },
-  "fmt": {
-    "exclude": ["./dist/", "./npm/"],
-    "proseWrap": "preserve"
-  },
-  "lint": {
-    "exclude": ["./dist/", "./npm/"]
+    "fmt": "deno fmt ./**/*.ts",
+    "fmt:check": "deno fmt --check ./**/*.ts",
+    "check": "deno check ./**/*.ts",
+    "lint": "deno lint ./**/*.ts"
   }
 }
