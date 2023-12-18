@@ -27,10 +27,15 @@ const isConfigArray = is.ArrayOf(
 
 const safeReadTextFileSync = Result.fromThrowable(
   Deno.readTextFileSync,
-  toError(),
+  toError("Unexpected readTextFileSync error"),
 );
 
-const convert = (config: PredicateType<typeof isConfig>) => {
+const safeParse = Result.fromThrowable(
+  JSON5.parse,
+  toError("Unexpected parse error"),
+);
+
+const convertPod = (config: PredicateType<typeof isConfig>) => {
   return safeReadTextFileSync(config.in)
     .asyncAndThen((content) => {
       return execPodium(content, config.type);
@@ -45,10 +50,6 @@ const convert = (config: PredicateType<typeof isConfig>) => {
 };
 
 const main = async (args: string[]) => {
-  const safeParse = Result.fromThrowable(
-    JSON5.parse,
-    toError(),
-  );
   const configString = args[0];
   if (configString === undefined) {
     throw new Error("Config must be specified.");
@@ -61,14 +62,16 @@ const main = async (args: string[]) => {
       }
       return ok(configs);
     })
-    .asyncAndThen((configs) => ResultAsync.combine(configs.map(convert)))
+    .asyncAndThen((configs) => {
+      return ResultAsync.combine(configs.map(convertPod));
+    })
     .match(
-      (s) => {
-        s.forEach((ss) => {
-          if (ss.autoMkdir) {
-            Deno.mkdirSync(dirname(ss.out), { recursive: true });
+      (outputs) => {
+        outputs.forEach(({ content, out, autoMkdir }) => {
+          if (autoMkdir) {
+            Deno.mkdirSync(dirname(out), { recursive: true });
           }
-          Deno.writeTextFileSync(ss.out, ss.content);
+          Deno.writeTextFileSync(out, content);
         });
       },
       (e) => {
@@ -77,4 +80,6 @@ const main = async (args: string[]) => {
     );
 };
 
-await main(Deno.args);
+if (import.meta.main) {
+  await main(Deno.args);
+}
