@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: Omochciw/actions-podeno@v0
+      - uses: Omochice/actions-podeno@v0
         with:
           # config: { type: "markdown" | "vimdoc", in: string, out: string, autoMkdir?: boolean }[]
           #   type: Convert target type.
