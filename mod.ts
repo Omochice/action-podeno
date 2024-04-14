@@ -4,7 +4,7 @@ import { dirname } from "https://deno.land/std@0.222.1/path/dirname.ts";
 import {
   is,
   type PredicateType,
-} from "https://deno.land/x/unknownutil@v3.17.3/mod.ts";
+} from "https://deno.land/x/unknownutil@v3.18.0/mod.ts";
 import { execPodium } from "https://pax.deno.dev/Omochice/podeno@v1.0.0-1/src/lua.ts";
 
 const toError = (message = "Unexpected error") => {
