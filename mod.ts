@@ -1,6 +1,6 @@
 import JSON5 from "npm:json5@2.2.3";
 import { err, ok, Result, ResultAsync } from "npm:neverthrow@6.2.1";
-import { dirname } from "https://deno.land/std@0.222.1/path/dirname.ts";
+import { dirname } from "https://deno.land/std@0.224.0/path/dirname.ts";
 import {
   is,
   type PredicateType,
