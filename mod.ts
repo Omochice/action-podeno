@@ -1,10 +1,7 @@
 import JSON5 from "npm:json5@2.2.3";
 import { err, ok, Result, ResultAsync } from "npm:neverthrow@6.2.1";
 import { dirname } from "jsr:@std/path@0.222.1/dirname";
-import {
-  is,
-  type PredicateType,
-} from "jsr:@core/unknownutil@3.18.0";
+import { is, type PredicateType } from "jsr:@core/unknownutil@3.18.0";
 import { execPodium } from "https://pax.deno.dev/Omochice/podeno@v1.0.0-1/src/lua.ts";
 
 const toError = (message = "Unexpected error") => {
