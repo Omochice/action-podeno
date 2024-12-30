@@ -1,7 +1,7 @@
 import JSON5 from "npm:json5@2.2.3";
 import { err, ok, Result, ResultAsync } from "npm:neverthrow@8.1.1";
 import { dirname } from "jsr:@std/path@1.0.8/dirname";
-import { is, type PredicateType } from "jsr:@core/unknownutil@4.3.0";
+import { as, is, type PredicateType } from "jsr:@core/unknownutil@4.3.0";
 import { execPodium } from "https://raw.githubusercontent.com/Omochice/podeno/refs/tags/v2.0.0/src/lua.ts";
 
 const toError = (message = "Unexpected error") => {
@@ -12,10 +12,10 @@ const toError = (message = "Unexpected error") => {
 };
 
 const isConfig = is.ObjectOf({
-  type: is.OneOf([is.LiteralOf("markdown"), is.LiteralOf("vimdoc")]),
+  type: is.UnionOf([is.LiteralOf("markdown"), is.LiteralOf("vimdoc")]),
   in: is.String,
   out: is.String,
-  autoMkdir: is.OptionalOf(is.Boolean),
+  autoMkdir: as.Optional(is.Boolean),
 });
 
 const isConfigArray = is.ArrayOf(
