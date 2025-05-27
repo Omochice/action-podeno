@@ -1,6 +1,6 @@
 import JSON5 from "npm:json5@2.2.3";
 import { err, ok, Result, ResultAsync } from "npm:neverthrow@8.2.0";
-import { dirname } from "jsr:@std/path@1.0.9/dirname";
+import { dirname } from "jsr:@std/path@1.1.0/dirname";
 import { as, is, type PredicateType } from "jsr:@core/unknownutil@4.3.0";
 import { execPodium } from "https://raw.githubusercontent.com/Omochice/podeno/refs/tags/v2.0.0/src/lua.ts";
 
