@@ -3,7 +3,7 @@ description: setup-deno with dependencies cache
 runs:
   using: "composite"
   steps:
-    - uses: actions/cache@v4
+    - uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4
       with:
         path: ~/.cache/deno
         key: deno-${{ github.job }}-${{ runner.os }}-${{ hashFiles('deno.lock') }}
@@ -13,6 +13,6 @@ runs:
       with:
         deno-version: v1.x
     - name: Setup Node.js for dnt
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
       with:
         node-version: 20
