@@ -1,5 +1,5 @@
 # Container image that runs your code
-FROM denoland/deno:latest@sha256:a5c9bbca7fe855a35a8656b7ce0ee7ff0084154d7c5cdc5005a89dc882a88b63
+FROM denoland/deno:latest@sha256:075c8d994cf1e44f10d98ea86f6693037e9c66eb83e9b5fa6a534147372de3fb
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
 COPY mod.ts /mod.ts
